@@ -975,7 +975,7 @@ static void addClassToContext(const Entry *root)
   }
 
   // see if we already found the class before
-  ClassDefMutable *cd = getClassMutable(qualifiedName);
+  ClassDefMutable *cd = getClassMutable(qualifiedName);     // TODO クラス名はパスも加味して
 
   Debug::print(Debug::Classes,0, "  Found class with name %s (qualifiedName=%s -> cd=%p)\n",
       cd ? qPrint(cd->name()) : qPrint(root->name), qPrint(qualifiedName),cd);
@@ -1138,14 +1138,18 @@ static void addClassToContext(const Entry *root)
 //----------------------------------------------------------------------
 // build a list of all classes mentioned in the documentation
 // and all classes that have a documentation block before their definition.
-static void buildClassList(const Entry *root)
+static void buildClassList(Entry *root)
 {
   if (
         ((root->section & Entry::COMPOUND_MASK) ||
          root->section==Entry::OBJCIMPL_SEC) && !root->name.isEmpty()
      )
   {
-    addClassToContext(root);
+      // TODO: クラス名変換
+      root->name = root->fileName;
+      root->name = substitute(root->fileDef()->docName(),"/","::");
+      root->name = substitute(root->name, ".php","");
+      addClassToContext(root);
   }
   for (const auto &e : root->children()) buildClassList(e.get());
 }
