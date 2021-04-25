@@ -20,3 +20,20 @@
 tags
 
 .idea
+### https://raw.github.com/github/gitignore/2c0cb52a67921cf3dffb8098ba027f376f73f859/CMake.gitignore
+
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+
+generated_src/
+cmake-build-debug/.cmake/
+lib/
+cmake-build-debug/CPackConfig.cmake
+cmake-build-debug/CPackSourceConfig.cmake
